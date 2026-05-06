@@ -1,6 +1,4 @@
-/* ══════════════════════════════════
-   EL RAYAN PACK — script.js
-══════════════════════════════════ */
+
 
 (function () {
     'use strict';
@@ -312,3 +310,231 @@
     })();
 
 })();
+
+/* ── LANGUAGE TOGGLE ── */
+window.toggleLang = function () {
+    const body = document.body;
+    const isAr = body.classList.toggle('lang-ar');
+    const label = document.getElementById('langLabel');
+    if (label) label.textContent = isAr ? 'English' : 'عربي';
+
+    const t = isAr ? translations.ar : translations.en;
+
+    // Nav links
+    document.querySelectorAll('.nav-link').forEach(function(el) {
+        const key = el.getAttribute('href').replace('#','').toLowerCase().replace('-','_');
+        if (t.nav[key]) el.textContent = t.nav[key];
+    });
+    document.querySelectorAll('.mobile-link').forEach(function(el) {
+        const key = el.getAttribute('href').replace('#','').toLowerCase().replace('-','_');
+        if (t.nav[key]) el.textContent = t.nav[key];
+    });
+
+    // Hero
+    const heroBadge = document.querySelector('.hero-badge');
+    if (heroBadge) heroBadge.innerHTML = '<span class="badge-dot"></span>' + t.hero.badge;
+
+    const heroLines = document.querySelectorAll('.hero-line');
+    if (heroLines[0]) heroLines[0].textContent = t.hero.line1;
+    if (heroLines[1]) heroLines[1].textContent = t.hero.line2;
+    if (heroLines[2]) heroLines[2].textContent = t.hero.line3;
+
+    const heroSub = document.querySelector('.hero-sub');
+    if (heroSub) heroSub.innerHTML = t.hero.sub;
+
+    const heroBtns = document.querySelectorAll('.hero-actions a');
+    if (heroBtns[0]) heroBtns[0].innerHTML = '<span>' + t.hero.btn1 + '</span><i class="fas fa-arrow-right"></i>';
+    if (heroBtns[1]) heroBtns[1].textContent = t.hero.btn2;
+
+    const statLabels = document.querySelectorAll('.stat-label');
+    const sLabels = t.hero.stats;
+    statLabels.forEach(function(el, i) { if (sLabels[i]) el.textContent = sLabels[i]; });
+
+    // Sections headers
+    document.querySelectorAll('.section-tag').forEach(function(el, i) {
+        if (t.sections.tags[i]) el.textContent = t.sections.tags[i];
+    });
+    document.querySelectorAll('.section-title').forEach(function(el, i) {
+        if (t.sections.titles[i]) el.textContent = t.sections.titles[i];
+    });
+    document.querySelectorAll('.section-sub').forEach(function(el, i) {
+        if (t.sections.subs[i]) el.innerHTML = t.sections.subs[i];
+    });
+
+    // Products
+    const products = document.querySelectorAll('.product-card');
+    products.forEach(function(card, i) {
+        const p = t.products[i];
+        if (!p) return;
+        card.querySelector('h3').textContent = p.title;
+        card.querySelector('p').textContent = p.desc;
+        card.querySelector('.product-link').innerHTML = p.link + ' <i class="fas fa-arrow-right"></i>';
+    });
+
+    // Header CTA
+    const headerCta = document.querySelector('.header-cta');
+    if (headerCta) headerCta.innerHTML = '<i class="fab fa-whatsapp"></i> ' + t.headerCta;
+
+    // Marquee label
+    const marqueeLabel = document.querySelector('.marquee-label');
+    if (marqueeLabel) marqueeLabel.textContent = t.marqueeLabel;
+
+    // Price search placeholder
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+
+    // About section
+    const aboutSub = document.querySelector('.about-sub');
+    if (aboutSub) aboutSub.textContent = t.about.sub;
+    const aboutPs = document.querySelectorAll('.about-text-col > p');
+    if (aboutPs[0]) aboutPs[0].textContent = t.about.p1;
+    if (aboutPs[1]) aboutPs[1].textContent = t.about.p2;
+
+    const featureTitles = document.querySelectorAll('.feature-item strong');
+    const featureDescs = document.querySelectorAll('.feature-item p');
+    t.about.features.forEach(function(f, i) {
+        if (featureTitles[i]) featureTitles[i].textContent = f.title;
+        if (featureDescs[i]) featureDescs[i].textContent = f.desc;
+    });
+
+    // Contact
+    const formTitle = document.querySelector('.form-title');
+    if (formTitle) formTitle.textContent = t.form.title;
+    const formLabels = document.querySelectorAll('.form-group label');
+    const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+    t.form.fields.forEach(function(f, i) {
+        if (formLabels[i]) formLabels[i].textContent = f.label;
+        if (formInputs[i]) formInputs[i].placeholder = f.placeholder;
+    });
+    const submitBtn = document.querySelector('.form-submit span');
+    if (submitBtn) submitBtn.textContent = t.form.submit;
+
+    // Footer
+    const footerBrandP = document.querySelector('.footer-brand p');
+    if (footerBrandP) footerBrandP.textContent = t.footer.tagline;
+    const footerLinks = document.querySelectorAll('.footer-links a');
+    t.footer.links.forEach(function(l, i) { if (footerLinks[i]) footerLinks[i].textContent = l; });
+    const footerCopys = document.querySelectorAll('.footer-copy p');
+    if (footerCopys[0]) footerCopys[0].textContent = t.footer.copy;
+
+    // RTL/LTR direction fix on html tag
+    document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('lang', isAr ? 'ar' : 'en');
+};
+
+var translations = {
+    en: {
+        nav: { products: 'Products', price_list: 'Price List', about: 'About', contact: 'Contact' },
+        headerCta: 'Get a Quote',
+        marqueeLabel: 'Trusted Brands',
+        searchPlaceholder: 'Search brands...',
+        hero: {
+            badge: 'Premium Packaging Solutions · Since 2018',
+            line1: 'Packaging', line2: 'That Protects', line3: 'Your Brand',
+            sub: "Egypt's trusted supplier for food & hospitality packaging.<br>Quality products, competitive prices, fast delivery.",
+            btn1: 'Explore Products', btn2: 'View Price Lists',
+            stats: ['Brands', 'Years', 'Clients']
+        },
+        sections: {
+            tags: ['What We Offer', 'Always Updated', 'Our Story', 'Reach Out'],
+            titles: ['Our Products', 'Price Lists', 'About Us', 'Contact Us'],
+            subs: [
+                'High-quality packaging solutions for every business need',
+                'Click any brand to view its latest price list in PDF format',
+                '',
+                "We're always ready to help — choose your preferred channel"
+            ]
+        },
+        products: [
+            { title: 'Paper Cups', desc: 'High quality paper cups for hot and cold drinks with custom printing options available.', link: 'Get Pricing' },
+            { title: 'Food Containers', desc: 'Eco-friendly foam and plastic containers designed for restaurants and food businesses.', link: 'Get Pricing' },
+            { title: 'Cutlery Sets', desc: 'Disposable forks, spoons, and knives for high-end hospitality and catering services.', link: 'Get Pricing' },
+            { title: 'Plastic Packaging', desc: 'Stretch film, bags, and plastic wrap solutions for industrial and commercial use.', link: 'Get Pricing' },
+            { title: 'Foam Products', desc: 'Lightweight and insulating foam trays and containers for food preservation.', link: 'Get Pricing' },
+            { title: 'Custom Printing', desc: 'Brand your packaging with custom logos and designs to stand out in the market.', link: 'Get Pricing' }
+        ],
+        about: {
+            sub: 'من نحن',
+            p1: 'Rayan Pack — Our journey began in 2018. We believe that packaging quality is the first step to any product\'s success. With years of experience, we strive to provide innovative and practical solutions.',
+            p2: 'We offer a diverse range of packaging products characterized by high quality using safe materials, modern designs, and customized solutions for various sectors.',
+            features: [
+                { title: 'Premium Quality', desc: 'Safe, certified materials' },
+                { title: 'Fast Delivery', desc: 'On-time, every time' },
+                { title: 'Best Prices', desc: 'Competitive market rates' },
+                { title: '24/7 Support', desc: 'Always here for you' }
+            ]
+        },
+        form: {
+            title: 'Inquiries & Complaints',
+            fields: [
+                { label: 'Name', placeholder: 'Your full name' },
+                { label: 'Email', placeholder: 'email@example.com' },
+                { label: 'Phone', placeholder: '+20 1XX XXX XXXX' },
+                { label: 'Message', placeholder: 'Write your message here...' }
+            ],
+            submit: 'Send Message'
+        },
+        footer: {
+            tagline: 'Premium Packaging Solutions for Food & Hospitality',
+            links: ['Products', 'Price List', 'About', 'Contact'],
+            copy: '© 2025 EL Rayan Pack — All rights reserved'
+        }
+    },
+    ar: {
+        nav: { products: 'المنتجات', price_list: 'قائمة الأسعار', about: 'من نحن', contact: 'تواصل معنا' },
+        headerCta: 'احصل على عرض سعر',
+        marqueeLabel: 'علاماتنا التجارية',
+        searchPlaceholder: 'ابحث عن ماركة...',
+        hero: {
+            badge: 'حلول تعبئة وتغليف متميزة · منذ 2018',
+            line1: 'تغليف', line2: 'يحمي علامتك', line3: 'التجارية',
+            sub: 'الموزع الموثوق في مصر لتغليف الأغذية والضيافة.<br>منتجات عالية الجودة، أسعار تنافسية، توصيل سريع.',
+            btn1: 'استعرض المنتجات', btn2: 'عرض قوائم الأسعار',
+            stats: ['ماركة', 'سنوات', 'عميل']
+        },
+        sections: {
+            tags: ['ما نقدمه', 'محدّثة دائمًا', 'قصتنا', 'تواصل معنا'],
+            titles: ['منتجاتنا', 'قوائم الأسعار', 'من نحن', 'اتصل بنا'],
+            subs: [
+                'حلول تغليف عالية الجودة لكل احتياجات عملك',
+                'اضغط على أي ماركة لعرض آخر قائمة أسعار بصيغة PDF',
+                '',
+                'نحن دائمًا مستعدون للمساعدة — اختر قناة التواصل المفضلة لديك'
+            ]
+        },
+        products: [
+            { title: 'أكواب ورقية', desc: 'أكواب ورقية عالية الجودة للمشروبات الساخنة والباردة مع خيارات طباعة مخصصة.', link: 'احصل على السعر' },
+            { title: 'عبوات غذائية', desc: 'عبوات فوم وبلاستيك صديقة للبيئة مصممة للمطاعم ومشاريع الأغذية.', link: 'احصل على السعر' },
+            { title: 'أدوات مائدة', desc: 'شوك وملاعق وسكاكين للاستخدام مرة واحدة لخدمات الضيافة والتموين الراقية.', link: 'احصل على السعر' },
+            { title: 'تغليف بلاستيكي', desc: 'أفلام تمديد وأكياس وحلول تغليف بلاستيكية للاستخدام الصناعي والتجاري.', link: 'احصل على السعر' },
+            { title: 'منتجات فوم', desc: 'صواني وعبوات فوم خفيفة الوزن وعازلة للحفاظ على الأغذية.', link: 'احصل على السعر' },
+            { title: 'طباعة مخصصة', desc: 'ضع علامتك التجارية على تغليفك بشعارات وتصاميم مخصصة لتتميز في السوق.', link: 'احصل على السعر' }
+        ],
+        about: {
+            sub: 'من نحن',
+            p1: 'ريان للتعبئة والتغليف — بدأت رحلتنا في عام 2018. نؤمن أن جودة التغليف هي الخطوة الأولى لنجاح أي منتج. بخبرة تمتد لسنوات، نسعى لتقديم حلول مبتكرة وعملية تواكب احتياجات السوق.',
+            p2: 'نقدّم مجموعة متنوعة من منتجات التغليف التي تتميز بجودة عالية باستخدام خامات آمنة، وتصاميم عصرية تبرز هوية المنتج، وحلول مخصصة لمختلف القطاعات.',
+            features: [
+                { title: 'جودة عالية', desc: 'مواد آمنة ومعتمدة' },
+                { title: 'توصيل سريع', desc: 'في الوقت المحدد دائمًا' },
+                { title: 'أفضل الأسعار', desc: 'أسعار تنافسية في السوق' },
+                { title: 'دعم 24/7', desc: 'دائمًا في خدمتك' }
+            ]
+        },
+        form: {
+            title: 'للاستفسارات والشكاوى',
+            fields: [
+                { label: 'الاسم', placeholder: 'اسمك الكامل' },
+                { label: 'البريد الإلكتروني', placeholder: 'email@example.com' },
+                { label: 'رقم الهاتف', placeholder: '+20 1XX XXX XXXX' },
+                { label: 'رسالتك', placeholder: 'اكتب رسالتك هنا...' }
+            ],
+            submit: 'إرسال الرسالة'
+        },
+        footer: {
+            tagline: 'حلول تعبئة وتغليف متميزة للأغذية والضيافة',
+            links: ['المنتجات', 'قائمة الأسعار', 'من نحن', 'تواصل'],
+            copy: '© 2025 ريان باك — جميع الحقوق محفوظة'
+        }
+    }
+};
