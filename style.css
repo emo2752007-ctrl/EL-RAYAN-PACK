@@ -750,3 +750,43 @@ header.scrolled {
     .price-grid { grid-template-columns: 1fr; }
     .price-card { height: 240px; }
 }
+
+
+.lang-toggle {
+    display: flex; align-items: center; gap: 7px;
+    background: transparent;
+    border: 1.5px solid rgba(37,99,235,.35);
+    color: var(--blue);
+    padding: 8px 16px; border-radius: var(--radius-md);
+    font-size: .875rem; font-weight: 600;
+    transition: all .25s ease;
+    margin-right: 8px;
+    cursor: pointer;
+}
+.lang-toggle:hover {
+    background: var(--blue); color: var(--white);
+    border-color: var(--blue);
+    transform: translateY(-1px);
+}
+.lang-toggle i { font-size: 1rem; }
+
+/* RTL mode adjustments */
+body.lang-ar { direction: rtl; font-family: 'Cairo', var(--font-body); }
+body.lang-ar .logo { flex-direction: row-reverse; }
+body.lang-ar .navigation { flex-direction: row-reverse; }
+body.lang-ar .hero-content { text-align: right; }
+body.lang-ar .hero-actions { justify-content: flex-start; }
+body.lang-ar .hero-sub { text-align: right; }
+body.lang-ar .section-title.left { text-align: right; }
+body.lang-ar .about-text-col p { text-align: right; }
+body.lang-ar .form-title { text-align: right; }
+body.lang-ar .form-group label { text-align: right; }
+body.lang-ar .footer-inner { direction: rtl; }
+body.lang-ar .footer-links { text-align: right; }
+body.lang-ar .inquiry-form { direction: rtl; }
+body.lang-ar .feature-item { direction: rtl; }
+
+@media (max-width: 768px) {
+    .lang-toggle { padding: 7px 12px; font-size: .8rem; }
+    .lang-toggle span { display: none; }
+}
